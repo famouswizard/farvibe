@@ -1,94 +1,83 @@
-'use client'
+"use client"
 
-import React, { useEffect, useState } from 'react'
-import { useAccount } from 'wagmi'
-import { ConnectWallet } from '@/components/ConnectWallet'
-import { VibeResult } from '@/components/VibeResult'
-import { RecordOnchainButton } from '@/components/RecordOnchainButton'
+import React, { useEffect, useState } from "react"
+import { useAccount } from "wagmi"
+import { ConnectWallet } from "@/components/ConnectWallet"
+import { VibeResult } from "@/components/VibeResult"
+import { RecordOnchainButton } from "@/components/RecordOnchainButton"
 
-type VibeResponse = {
-  address: string
+interface VibeData {
   vibeCategory: string
   song: string
   youtubeUrl: string
-  txCount30d: number
-  volumeEth30d: number
 }
 
 export default function HomePage() {
-  const { address, isConnected } = useAccount()
-  const [vibe, setVibe] = useState<VibeResponse | null>(null)
+  const { address } = useAccount()
+  const [vibe, setVibe] = useState<VibeData | null>(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    async function load() {
-      if (!address) return
-      setLoading(true)
-      try {
-        const res = await fetch(`/api/activity?address=${address}`)
-        const json = await res.json()
-        setVibe(json)
-      } catch (e) {
-        console.error(e)
-      } finally {
-        setLoading(false)
-      }
+  async function fetchVibe() {
+    if (!address) {
+      setError("Connect wallet to get your FarVibe.")
+      return
     }
 
-    load()
+    try {
+      setLoading(true)
+      setError(null)
+      const res = await fetch(`/api/activity?address=${address}`)
+      if (!res.ok) throw new Error(`API error: ${res.status}`)
+      const data = await res.json()
+      setVibe(data)
+    } catch (err: any) {
+      console.error(err)
+      setError(err.message || "Failed to fetch vibe data.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (address) fetchVibe()
   }, [address])
 
   return (
-    <main className="min-h-dvh flex flex-col p-4 gap-4 bg-gradient-to-b from-[#1a1a1d] to-[#0f0f10]">
-      <header className="flex items-start justify-between">
-        <div className="text-lg font-semibold text-white">FarVibe</div>
-        <div className="text-xs text-white/40">Base only</div>
-      </header>
+    <main className="min-h-dvh bg-[#0f0f10] text-white flex flex-col items-center justify-center gap-8 p-8">
+      <h1 className="text-4xl font-bold text-center text-blue-400">FarVibe</h1>
 
-      <ConnectWallet />
-
-      {isConnected && (
-        <div className="flex flex-col gap-4">
-          {loading && (
-            <div className="text-white/60 text-sm">
-              Scanning your Base activity, picking your vibe…
-            </div>
-          )}
-
-          {vibe && (
-            <>
-              <VibeResult
-                vibeCategory={vibe.vibeCategory}
-                song={vibe.song}
-                youtubeUrl={vibe.youtubeUrl}
-                address={vibe.address}
-              />
-
-              <RecordOnchainButton
-                vibeCategory={vibe.vibeCategory}
-                song={vibe.song}
-                youtubeUrl={vibe.youtubeUrl}
-              />
-
-              <div className="text-[11px] text-white/40 leading-snug">
-                Tx last 30d: {vibe.txCount30d} • Volume:{' '}
-                {vibe.volumeEth30d.toFixed(4)} ETH
-              </div>
-            </>
-          )}
+      {!address && (
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-white/70">Connect your Farcaster wallet to get started.</p>
+          <ConnectWallet />
         </div>
       )}
 
-      {!isConnected && (
-        <div className="text-white/60 text-xs">
-          Connect wallet (your embedded Farcaster/Base wallet will auto-connect)
-          and I&apos;ll tell you your vibe.
+      {address && !vibe && (
+        <div className="flex flex-col items-center gap-4">
+          <button
+            onClick={fetchVibe}
+            disabled={loading}
+            className="bg-blue-600 hover:bg-blue-700 rounded-xl px-4 py-2 text-white disabled:opacity-60"
+          >
+            {loading ? "Analyzing..." : "Analyze my vibe"}
+          </button>
+          {error && <p className="text-red-400 text-sm">{error}</p>}
         </div>
       )}
 
-      <footer className="mt-auto text-[10px] text-white/30 text-center">
-        FarVibe • on Base • v0.1
-      </footer>
+      {vibe && (
+        <div className="flex flex-col items-center gap-6">
+          <VibeResult vibe={vibe} />
+
+          <RecordOnchainButton
+            category={vibe.vibeCategory}
+            track={vibe.song}
+            url={vibe.youtubeUrl}
+          />
+        </div>
+      )}
     </main>
   )
 }
