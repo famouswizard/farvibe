@@ -3,7 +3,6 @@
 import React, { useState } from "react"
 import { useAccount, useWriteContract } from "wagmi"
 import { base } from "viem/chains"
-import { Button } from "@/components/ui/button"
 
 const FARVIBE_REGISTRY_ADDRESS =
   (process.env.NEXT_PUBLIC_FARVIBE_REGISTRY_ADDRESS as `0x${string}`) ??
@@ -17,16 +16,16 @@ const FARVIBE_REGISTRY_ABI = [
     inputs: [
       { name: "vibeCategory", type: "string" },
       { name: "track", type: "string" },
-      { name: "youtubeUrl", type: "string" },
+      { name: "youtubeUrl", type: "string" }
     ],
-    outputs: [],
-  },
+    outputs: []
+  }
 ] as const
 
 export function RecordOnchainButton({
   category,
   track,
-  url,
+  url
 }: {
   category: string
   track: string
@@ -39,7 +38,7 @@ export function RecordOnchainButton({
 
   async function handleRecord() {
     if (!account) {
-      alert("Connect your wallet first")
+      alert("Connect your wallet first.")
       return
     }
 
@@ -52,7 +51,7 @@ export function RecordOnchainButton({
         functionName: "recordVibe",
         args: [category, track, url],
         chain: base,
-        account,
+        account
       })
 
       setTxHash(hash)
@@ -67,13 +66,13 @@ export function RecordOnchainButton({
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <Button
+      <button
         onClick={handleRecord}
         disabled={isLoading}
-        className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-4 py-2"
+        className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-4 py-2 disabled:opacity-60"
       >
         {isLoading ? "Recording..." : "Record onchain"}
-      </Button>
+      </button>
 
       {txHash && (
         <a
