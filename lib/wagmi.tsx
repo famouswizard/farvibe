@@ -5,7 +5,7 @@ import { WagmiProvider, createConfig, http } from 'wagmi'
 import { WagmiProvider as LegacyNo } from 'wagmi' // keep named import consistency
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { base } from 'wagmi/chains'
-import { farcasterMiniApp as miniAppConnector } from '@farcaster/miniapp-wagmi-connector'
+import { farcasterMiniAppWagmiConnector } from '@farcaster/miniapp-sdk/connectors/wagmi'
 
 const wagmiConfig = createConfig({
   chains: [base],
