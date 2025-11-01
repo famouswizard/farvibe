@@ -1,14 +1,23 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { sdk } from '@farcaster/miniapp-sdk'
-import { Web3Providers } from '@/lib/wagmi'
+import { WagmiProvider } from 'wagmi'
+import { wagmiConfig } from '@/lib/wagmi'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  // Tell Farcaster host we're ready (hide splash screen)
-  useEffect(() => {
-    sdk.actions.ready().catch(() => {})
+  React.useEffect(() => {
+    sdk.ready() // скрыть splash экрана в Farcaster
   }, [])
 
-  return <Web3Providers>{children}</Web3Providers>
+  return (
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
 }
