@@ -10,7 +10,7 @@ const queryClient = new QueryClient()
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
-    sdk.ready() // скрыть splash экрана в Farcaster
+    sdk.actions.ready()
   }, [])
 
   return (
