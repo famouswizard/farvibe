@@ -1,59 +1,32 @@
-'use client'
+"use client"
 
-import { sdk } from '@farcaster/miniapp-sdk'
+import React from "react"
 
-type Props = {
+interface VibeData {
   vibeCategory: string
   song: string
   youtubeUrl: string
-  address: string
 }
 
-export function VibeResult({ vibeCategory, song, youtubeUrl, address }: Props) {
-  async function handleCast() {
-    const text = `My onchain vibe on Base: ${vibeCategory.toUpperCase()} 🎧 ${song} — ${youtubeUrl}\n\nCheck yours in FarVibe 👇`
-    const embeds = [
-      `https://farvibe.netlify.app/share/${address}`,
-    ]
-    try {
-      await sdk.actions.composeCast({
-        text,
-        embeds,
-      })
-    } catch (e) {
-      console.error(e)
-    }
-  }
+interface Props {
+  vibe: VibeData
+}
 
+export function VibeResult({ vibe }: Props) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl bg-white/5 border border-white/10 p-4">
-      <div className="flex flex-col">
-        <div className="text-xs text-white/60 uppercase tracking-wide">
-          YOUR VIBE
-        </div>
-        <div className="text-2xl font-semibold text-white">{vibeCategory}</div>
-      </div>
-
-      <div className="flex flex-col">
-        <div className="text-xs text-white/60 uppercase tracking-wide">
-          YOUR TRACK
-        </div>
-        <a
-          className="text-lg font-medium text-[#0052FF] underline break-words"
-          href={youtubeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {song}
-        </a>
-      </div>
-
-      <button
-        onClick={handleCast}
-        className="bg-white text-black font-semibold rounded-2xl px-4 py-3 text-base w-full active:scale-[.98]"
+    <div className="flex flex-col items-center text-center bg-[#1a1a1c] p-6 rounded-2xl shadow-lg max-w-md">
+      <h2 className="text-2xl font-semibold text-blue-400 mb-2">
+        Your vibe: {vibe.vibeCategory}
+      </h2>
+      <p className="text-white/90 mb-4">🎵 {vibe.song}</p>
+      <a
+        href={vibe.youtubeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-500 hover:text-blue-300 transition"
       >
-        Cast my vibe
-      </button>
+        Watch on YouTube ↗
+      </a>
     </div>
   )
 }
