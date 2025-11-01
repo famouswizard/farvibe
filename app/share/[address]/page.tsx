@@ -1,34 +1,36 @@
-import React from 'react'
-import Image from 'next/image'
-import shareImage from '@/public/share-default.png'
+import React from "react"
+import Image from "next/image"
+import shareImage from "@/public/share-default.png"
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic"
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://farvibe.netlify.app'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://farvibe.netlify.app"
 
+// строим объект миниаппа для Farcaster
 function buildMiniAppEmbed(address: string) {
   return {
-    version: '1',
+    version: "1",
     imageUrl: `${BASE_URL}/share-default.png`,
     button: {
-      title: 'Check my FarVibe',
+      title: "Check my FarVibe",
       action: {
-        type: 'launch_miniapp',
+        type: "launch_miniapp",
         url: `${BASE_URL}?address=${address}`,
-        name: 'FarVibe',
+        name: "FarVibe",
         splashImageUrl: `${BASE_URL}/splash.png`,
-        splashBackgroundColor: '#0f0f10',
+        splashBackgroundColor: "#0f0f10",
       },
     },
   }
 }
 
-export default async function SharePage({
-  params,
-}: {
-  params: { address: string }
-}) {
-  const { address } = params
+// Next.js 15 передаёт params как Promise, поэтому ждём его
+interface SharePageProps {
+  params: Promise<{ address: string }>
+}
+
+export default async function SharePage(props: SharePageProps) {
+  const { address } = await props.params
   const embed = buildMiniAppEmbed(address)
   const embedStr = JSON.stringify(embed)
 
@@ -39,10 +41,10 @@ export default async function SharePage({
       <head>
         <title>{title}</title>
         <meta name="fc:miniapp" content={embedStr} />
-        {/* Fallback / backward-compat hint; not all clients may require it */}
+        {/* fallback для старых клиентов Farcaster */}
         <meta
           name="fc:frame"
-          content={embedStr.replace('launch_miniapp', 'launch_frame')}
+          content={embedStr.replace("launch_miniapp", "launch_frame")}
         />
         <meta property="og:title" content="FarVibe on Base" />
         <meta
