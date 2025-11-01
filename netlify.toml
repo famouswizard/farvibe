@@ -1,3 +1,13 @@
 [build]
   command = "npm run build"
   publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+  NODE_VERSION = "18"
+  NEXT_PUBLIC_BASE_URL = "https://farvibe.netlify.app"
+  NEXT_PUBLIC_FARVIBE_REGISTRY_ADDRESS = "0x5468855566d73db838150a45fae58c06d1275c66"
+  BASESCAN_API_KEY = "G5VXR92PWES8DK9CIJ38BD7MPCZ56ZMCPT"
