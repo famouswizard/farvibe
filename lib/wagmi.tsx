@@ -1,28 +1,13 @@
 'use client'
 
-import React from 'react'
-import { WagmiProvider, createConfig, http } from 'wagmi'
-import { WagmiProvider as LegacyNo } from 'wagmi' // keep named import consistency
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { base } from 'wagmi/chains'
-import { farcasterMiniAppWagmiConnector } from '@farcaster/miniapp-sdk/connectors/wagmi'
+import { http, createConfig } from 'wagmi'
+import { base } from 'viem/chains'
+import { injected } from 'wagmi/connectors'
 
-const wagmiConfig = createConfig({
+export const wagmiConfig = createConfig({
   chains: [base],
+  connectors: [injected()],
   transports: {
-    [base.id]: http('https://mainnet.base.org'),
+    [base.id]: http(),
   },
-  connectors: [miniAppConnector()],
 })
-
-const queryClient = new QueryClient()
-
-export function Web3Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
-    </WagmiProvider>
-  )
-}
