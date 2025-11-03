@@ -1,6 +1,6 @@
 # FarVibe 🎧
 
-Farcaster Miniapp on Base.
+Farcaster Miniapp on Base
 
 FarVibe analyzes your onchain activity on Base, assigns you a "vibe",
 picks a song + YouTube link for that vibe, lets you record it onchain,
