@@ -13,7 +13,7 @@ and lets you cast it to Farcaster.
 - @farcaster/miniapp-sdk
 - @farcaster/miniapp-wagmi-connector
 - wagmi + viem
-- Base mainnet (chainId 8453)
+- Base Mainnet
 
 ## Smart contract
 
