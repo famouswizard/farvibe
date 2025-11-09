@@ -1,4 +1,4 @@
-# FarVibe 🎧
+# 🎧 FarVibe
 
 Farcaster Miniapp on Base
 
