@@ -59,4 +59,4 @@ BASESCAN_API_KEY=G5VXR92PWES8DK9CIJ38BD7MPCZ56ZMCPT
 - `public/app-icon.png` — 1024x1024 PNG, no alpha (placeholder here)
 - `public/splash.png` — 200x200 splash graphic (placeholder here)
 - `public/share-default.png` — 3:2 preview image for sharing (placeholder here).
-Last updated: Mon Nov 10 01:08:38 UTC 2025 — Random: 3593
+Last updated: Mon Nov 10 03:47:23 UTC 2025 — Random: 5274
