@@ -1,4 +1,4 @@
-name: Auto Update README every 3 hours
+name: Auto Update README every hour
 
 on:
   schedule:
