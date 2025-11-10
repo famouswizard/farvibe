@@ -15,7 +15,6 @@ jobs:
 
       - name: Random delay
         run: |
-          # Задержка 0–20 минут, чтобы коммиты были в разное время
           DELAY=$((RANDOM % 1200))
           echo "Sleeping for $DELAY seconds..."
           sleep $DELAY
@@ -37,7 +36,6 @@ jobs:
       - name: Update README with last 5 heartbeats
         run: |
           echo "Updating README with latest heartbeats..."
-          # Создаём временный блок
           echo "### 🩵 Recent Activity" > section.txt
           echo "" >> section.txt
           tail -n 5 heartbeat.log | tac | while read -r line; do
@@ -45,7 +43,6 @@ jobs:
           done
           echo "" >> section.txt
           
-          # Если секция уже есть — заменяем её, иначе добавляем в конец
           if grep -q "### 🩵 Recent Activity" README.md; then
             awk '/### 🩵 Recent Activity/{flag=1;print;next}/^$/{if(flag){flag=0}else{print}}' README.md > tmp.md
             head -n -0 README.md > tmp.md
