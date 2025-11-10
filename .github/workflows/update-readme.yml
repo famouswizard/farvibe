@@ -1,8 +1,8 @@
-name: Auto Update README every hour
+name: Auto Update README
 
 on:
   schedule:
-    - cron: "13 */1 * * *"
+    - cron: "0 */1 * * *"
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Wait random delay
+        run: |
+          # случайная задержка от 0 до 900 секунд (0–15 минут)
+          DELAY=$((RANDOM % 900))
+          echo "Sleeping for $DELAY seconds to randomize commit time..."
+          sleep $DELAY
 
       - name: Update README with time and random number
         run: |
@@ -30,4 +37,3 @@ jobs:
           git add README.md
           git commit -m "Auto update: $(date -u)" || echo "No changes to commit"
           git push
-
