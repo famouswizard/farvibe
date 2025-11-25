@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@farcaster/miniapp-sdk": "^0.1.5",
+    "@farcaster/miniapp-sdk": "^0.2.1",
     "@wagmi/core": "^3.0.0",
     "viem": "^2.21.3",
     "wagmi": "^3.0.1",
