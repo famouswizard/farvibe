@@ -15,7 +15,7 @@
     "wagmi": "^3.0.1",
     "next": "14.2.13",
     "@reown/appkit": "1.8.13",
-    "@reown/appkit-adapter-wagmi": "1.8.13",
+    "@reown/appkit-adapter-wagmi": "1.8.14",
     "@reown/appkit-common": "1.8.13",
     "@reown/appkit-universal-connector": "1.8.13",
     "react": "^18.3.1",
