@@ -8,7 +8,7 @@ and lets you cast it to Farcaster.
 
 ## Stack
 
-- Next.js (App Router)
+- Next.js
 - TypeScript
 - @farcaster/miniapp-sdk
 - @farcaster/miniapp-wagmi-connector
