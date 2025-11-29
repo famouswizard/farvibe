@@ -18,7 +18,7 @@ and lets you cast it to Farcaster.
 ## Smart contract
 
 We write your vibe to:
-`0x5468855566d73db838150a45fae58c06d1275c66` (Base mainnet).
+`0x5468855566d73db838150a45fae58c06d1275c66` (Base Mainnet).
 
 Function:
 ```solidity
