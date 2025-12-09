@@ -14,7 +14,7 @@
     "viem": "^2.21.3",
     "wagmi": "^3.0.1",
     "next": "16.0.8",
-    "@reown/appkit": "1.8.14",
+    "@reown/appkit": "1.8.15",
     "@reown/appkit-adapter-wagmi": "1.8.14",
     "@reown/appkit-common": "1.8.14",
     "@reown/appkit-universal-connector": "1.8.14",
